@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
 // body parser configuration
 app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (request, response, next) => {
   response.json({ message: "Hey! This is your server response!" });
@@ -36,15 +36,13 @@ app.get("/", (request, response, next) => {
 });
 
 app.post("/register", (request, response) => {
-  bcrypt
-  .hash(request.body.password, 10)
+  bcrypt.hash(request.body.password, 10)
   .then((hashedPassword) => {
     const user = new User({
       email: request.body.email,
       password: hashedPassword,
     });
-    user
-    .save()
+    user.save()
     .then((result) => {
       response.status(201).send({
         message: "User Created Successfully",
@@ -66,18 +64,11 @@ app.post("/register", (request, response) => {
   });
 });
 
-// login endpoint
 app.post("/login", (request, response) => {
-  // check if email exists
   User.findOne({ email: request.body.email })
-    // if email exists
     .then((user) => {
-      // compare the password entered and the hashed password found
-      bcrypt
-        .compare(request.body.password, user.password)
-        // if the passwords match
+      bcrypt.compare(request.body.password, user.password)
         .then((passwordCheck) => {
-          // check if password matches
           if(!passwordCheck) {
             return response.status(400).send({
               message: "Passwords does not match",
