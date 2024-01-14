@@ -1,7 +1,5 @@
 # auth-backend
 
-This tutorial teaches how to create authentication for a user using nodejs and mongoDB.
-
 ## Dependences
 
 - [Express](https://www.npmjs.com/package/express)
